@@ -10,6 +10,7 @@
         created() {
         },
         methods: {
+            
         }
     }
 
@@ -26,15 +27,19 @@
         <p>Scegli la tua storia</p>
 
         <div class="menu-options d-flex justify-content-evenly my-3">
-            <div class="menu-option" data-genre="fantasy">
+
+            <router-link :to="{ name: 'playground', params: { genre: 'fantasy' } }" class="menu-option">
                 fantasy
-            </div>
-            <div class="menu-option" data-genre="horror">
+            </router-link>
+
+            <router-link :to="{ name: 'playground', params: { genre: 'horror' } }" class="menu-option">
                 horror
-            </div>
-            <div class="menu-option" data-genre="super">
+            </router-link>
+
+            <router-link :to="{ name: 'playground', params: { genre: 'super' } }" class="menu-option">
                 super
-            </div>
+            </router-link>
+
         </div>
     </div>
 
