@@ -4,16 +4,30 @@ export default {
 	name: 'Playground',
 	data() {
 		return {
-
+            completeChat: [],
+            selectedGenre: '',
 		}
 	},
 	created() {
+        this.setGenre()
 	},
+    mounted() {
+    },
 	methods: {
         
 		test() {
 		    console.log(`ehi ${import.meta.env.VITE_API_KEY}`);
 		},
+
+        setGenre() {
+            // definisco il titolo dinamico della pagina
+            const genre = this.$route.params.genre;
+            document.title = `Text Adventure | ${genre}`;
+
+            // definisco il genere dell'avventura
+            this.selectedGenre = this.$route.params.genre;
+        },
+       
 	}
 }
 </script>
