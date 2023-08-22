@@ -1,14 +1,13 @@
 <script>
+import {RouterView} from 'vue-router'
 import HeaderComp from './components/Headercomp.vue';
-import StartMenu from './pages/StartMenu.vue';
-import Playground from './pages/Playground.vue';
+// import StartMenu from './pages/StartMenu.vue';
+// import Playground from './pages/Playground.vue';
 
 export default {
   name: 'app',
   components: {
     HeaderComp,
-    Playground,
-    StartMenu,
 }
 }
 
@@ -19,9 +18,9 @@ export default {
   <HeaderComp/>
 
   <div class="content">
-    <StartMenu/>
 
-    <Playground/>
+    <router-view/>
+
   </div>
   
 
