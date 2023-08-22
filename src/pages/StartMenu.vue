@@ -10,7 +10,7 @@
         created() {
         },
         methods: {
-            
+
         }
     }
 
@@ -36,7 +36,7 @@
                 horror
             </router-link>
 
-            <router-link :to="{ name: 'playground', params: { genre: 'super' } }" class="menu-option">
+            <router-link :to="{ name: 'playground', params: { genre: 'supereroi' } }" class="menu-option">
                 super
             </router-link>
 
