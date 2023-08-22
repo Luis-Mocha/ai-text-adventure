@@ -12,6 +12,8 @@ export default {
         this.setGenre()
 	},
     mounted() {
+        this.startGame(),
+        this.setStage()
     },
 	methods: {
         
@@ -26,6 +28,111 @@ export default {
 
             // definisco il genere dell'avventura
             this.selectedGenre = this.$route.params.genre;
+        },
+
+        startGame() {
+            // istruzioni inziali
+            this.completeChat.push({
+                role: 'system',
+                content: 
+                `Voglio che ti comporti come se fossi un classico gioco di avventura testuale. Io sarò il protagonista e giocatore principale. Non fare riferimento a te stesso. L'ambientazione di questo gioco sarà a tema ${this.selectedGenre}. Ogni ambientazione ha una descrizione di 150 caratteri seguita da una array di 3 azioni possibili che il giocatore può compiere. Una di queste azioni è mortale e termina il gioco.
+                Non aggiungere mai altre spiegazioni. Non fare riferimento a te stesso. Le tue risposte sono solo in formato JSON come questo esempio:
+                ###
+                { 
+                "description":"descrizione ambientazione",
+                "actions":["azione 1", "azione 2", "azione 3"]
+                }
+                ###`
+            });
+
+            // genero il primo livello
+        },
+
+        // --- funzione per creare il "livello" ---
+        async setStage() {
+            const loader = document.getElementById('loader');
+
+            // 1. Mostro il loader e interrogo chatgpt
+            loader.classList.remove('d-none');
+
+            const gtpResponse = await this.makeRequest('/chat/completions', {
+                temperature: 0.7,
+                model: import.meta.env.VITE_GPT_MODEL,
+                messages: this.completeChat
+            });
+
+            console.log(gtpResponse); //test risposta gpt
+
+            // 2. Inserisco la risposta gpt nello storico e la mostro (nascono il loader)
+            loader.classList.add('d-none');
+
+            const message = gtpResponse.choices[0].message;
+            this.completeChat.push(message);
+
+            // 3. Recupero il contenuto del messaggio per estrapolare la descrizione del livello e le possibili azioni
+            const content = JSON.parse(message.content);
+            // console.log(content);
+            let actions = content.actions;
+            let description = content.description;
+
+            // 4. stampo la descizione del livello e le azioni
+            this.setStageDescription(description);
+
+            this.setStageActions(actions);
+
+        },
+
+        // --- funzione per effettuare una richiesta a chat gpt ---
+        async makeRequest(endpoint, payload) {
+            const url = import.meta.env.VITE_API_BASE_URL + endpoint;
+
+            const response = await fetch (url, {
+                method: 'POST',
+                body: JSON.stringify(payload),
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
+                }
+            });
+
+            const jsonResponse = await response.json();
+            return jsonResponse;
+        },
+
+        // --- funzioni per stampare descrizione livello e azioni disponibili ---
+        setStageDescription(param) {
+            const stageDescription = document.querySelector('#stage-description')
+            stageDescription.innerText = param;
+        },
+        setStageActions(param) {
+            let actionsHtml = ''
+            // Salva il contesto di this
+            const self = this;
+
+            param.forEach(element => {
+                actionsHtml += `<button class="stage-action">${element}<button/>`
+            });
+
+            document.querySelector('#stage-actions').innerHTML = actionsHtml;
+
+            // per ogni bottone al click
+            const actionButtons = document.querySelectorAll('.stage-action');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // recuper l'azione scelta                    
+                    const selectedAction = button.innerText;
+
+                    // nuovo messaggio verso chatgpt
+                    self.completeChat.push({
+                        role: 'user',
+                        content: `${selectedAction}. Se questa azione è mortale l'elenco delle azioni è vuoto. Non dare altro testo che non sia un oggetto JSON. Le tue risposte sono solo in formato JSON come questo esempio:\n\n###\n\n{"description": "sei morto per questa motivazione", "actions": []}###`
+                    });
+
+                    // genero un nuovo livello
+                    self.setStage();
+                })
+            });
+
         },
        
 	}
@@ -42,25 +149,21 @@ export default {
         <!-- stage template -->
         <div class="stage">
 
-            <div class="stage-picture d-block">
-                <!-- <img src="https://picsum.photos/seed/random/512/512" alt=""> -->
+            <div id="loader" class="d-none">
+
+            </div>
+
+            <div class="stage-picture">
+                <!-- va inserita l'immagine generata -->
             </div>
 
             <div class="stage-content">
-                <div class="stage-description">
-                    <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla doloremque quas repellat facilis, corporis, debitis similique veniam placeat ratione voluptas maxime sed iste? Dolore explicabo sit, possimus eum dolores eligendi! -->
+                <div id="stage-description" class="stage-description">
+                    <!-- descrizione dinamica del livello -->
                 </div>
 
-                <div class="stage-actions d-flex justify-content-center">
-                    <button>
-                        <!-- Azione 1 -->
-                    </button>
-                    <button>
-                        <!-- Azione 2 -->
-                    </button>
-                    <button>
-                        <!-- Azione 3 -->
-                    </button>
+                <div id="stage-actions" class="stage-actions d-flex justify-content-center">
+                    
                 </div>
 
             </div>
@@ -78,15 +181,25 @@ h1 {
     color: green;
 }
 
-.stage-picture {
+#loader {
     height: 400px;
     width: 400px;
     margin: auto;
-
     background-image: url(/loader.gif);
     background-repeat: no-repeat;
     background-position: center;
     background-color: gainsboro;
+}
+
+.stage-picture {
+    // height: 400px;
+    // width: 400px;
+    // margin: auto;
+
+    // background-image: url('https://picsum.photos/seed/random/512/512');
+    // background-repeat: no-repeat;
+    // background-position: center;
+    // background-color: gainsboro;
 
     img {
         display: block;
