@@ -1,13 +1,15 @@
 <script>
 import HeaderComp from './components/Headercomp.vue';
+import StartMenu from './pages/StartMenu.vue';
 import Playground from './pages/Playground.vue';
 
 export default {
   name: 'app',
   components: {
     HeaderComp,
-    Playground
-  }
+    Playground,
+    StartMenu,
+}
 }
 
 </script>
@@ -16,11 +18,21 @@ export default {
 
   <HeaderComp/>
 
-  <Playground/>
+  <div class="content">
+    <StartMenu/>
+
+    <Playground/>
+  </div>
+  
 
 </template>
 
 <style lang="scss">
 @use './style/main.scss';
+
+.content {
+  background-color: black;
+  color: white;
+}
 
 </style>
