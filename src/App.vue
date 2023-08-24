@@ -17,21 +17,13 @@ export default {
 
   <HeaderComp/>
 
-  <div class="content">
-
-    <router-view/>
-
-  </div>
-  
+  <router-view/>  
 
 </template>
 
 <style lang="scss">
 @use './style/main.scss';
 
-.content {
-  background-color: black;
-  color: white;
-}
+
 
 </style>
