@@ -20,8 +20,12 @@
 @use '../style/main.scss';
 
 header {
-    background-color: rgb(16, 80, 24);
+    // background-color: rgb(25, 64, 30);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(18,73,39,1) 100%);
+    // background-color: transparent;
     color: white;
     font-size: 40px;
+
+    height: 60px;
 }
 </style>
