@@ -75,10 +75,20 @@ export default {
             let actions = content.actions;
             let description = content.description;
 
-            // 4. stampo la descizione del livello e le azioni
             this.setStageDescription(description);
 
             this.setStageActions(actions);
+
+            // nel caso di morte
+            if (actions.length === 0) {
+                this.setGameover(description);
+
+                // 4. stampo la descizione del livello e le azioni
+            } else {
+                this.setStageDescription(description);
+
+                this.setStageActions(actions);
+            }
 
         },
 
@@ -134,6 +144,17 @@ export default {
             });
 
         },
+
+        // --- funzione per aprire la modale di Gameover ---
+        setGameover(param) {
+            const deathModal = new bootstrap.Modal(document.getElementById('death-modal'));
+
+            const modalBody = document.querySelector('#death-modal .modal-body');
+            modalBody.innerText = param;
+
+            // deathModal.modal({show: "true"})
+            deathModal.show();
+        }
        
 	}
 }
@@ -146,6 +167,7 @@ export default {
     </h1>
 
     <div class="container">
+
         <!-- stage template -->
         <div class="stage">
 
@@ -168,9 +190,28 @@ export default {
 
             </div>
 
-        </div> <!-- fine stage -->
+        </div>
 
-    </div> <!-- fine container -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade " id="death-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="death-modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="death-modalLabel">You died</h1>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                    <button type="button" class="btn btn-primary">Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </template>
 
@@ -207,6 +248,10 @@ h1 {
         height: 100%;
         object-fit: cover;
     }
+}
+
+#death-modal {
+    
 }
 
 </style>
