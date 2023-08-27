@@ -6,6 +6,7 @@ export default {
 		return {
             completeChat: [],
             selectedGenre: '',
+            gameoverBtnHover: false,
 		}
 	},
 	created() {
@@ -75,9 +76,9 @@ export default {
             let actions = content.actions;
             let description = content.description;
 
-            this.setStageDescription(description);
+            // this.setStageDescription(description);
 
-            this.setStageActions(actions);
+            // this.setStageActions(actions);
 
             // nel caso di morte
             if (actions.length === 0) {
@@ -154,104 +155,150 @@ export default {
 
             // deathModal.modal({show: "true"})
             deathModal.show();
-        }
-       
+        },
+
 	}
 }
 </script>
 
 <template>
 
-    <h1 class="text-center">
-        Playground
-    </h1>
+    <div id="content">
 
-    <div class="container">
+        <h1 class="text-center">
+            Playground
+        </h1>
 
-        <!-- stage template -->
-        <div class="stage">
+        <div class="container">
 
-            <div id="loader" class="d-none">
+            <!-- stage template -->
+            <div class="stage">
 
-            </div>
+                <div id="loader" class="d-none">
 
-            <div class="stage-picture">
-                <!-- va inserita l'immagine generata -->
-            </div>
-
-            <div class="stage-content">
-                <div id="stage-description" class="stage-description">
-                    <!-- descrizione dinamica del livello -->
                 </div>
 
-                <div id="stage-actions" class="stage-actions d-flex justify-content-center">
-                    
+                <div class="stage-picture">
+                    <!-- va inserita l'immagine generata -->
                 </div>
 
-            </div>
+                <div class="stage-content">
+                    <div id="stage-description" class="stage-description">
+                        <!-- descrizione dinamica del livello -->
+                    </div>
 
-        </div>
+                    <div id="stage-actions" class="stage-actions d-flex justify-content-center">
+                        
+                    </div>
 
-    </div>
+                </div>
 
-    <!-- Modal -->
-    <div class="modal fade " id="death-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="death-modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="death-modalLabel">You died</h1>
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                    <button type="button" class="btn btn-primary">Understood</button>
-                </div>
             </div>
         </div>
-    </div>
+
+        <!-- Modal -->
+        <div class="modal fade " id="death-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="death-modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- <h1 class="modal-title fs-5" id="death-modalLabel">You died</h1> -->
+                        <span>You</span>
+                        <img src="https://i.giphy.com/media/l3V0yA9zHe5m29sxW/giphy.webp" alt="">
+                        <span>Died</span>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                        <button type="button" class="btn gameover-btn">
+                            <!-- <router-link :to="{ name: 'startMenu' }">
+                                <i class="fa-solid fa-door-closed"></i>
+                            </router-link> -->
+                            <a href="/">
+                                <i class="fa-solid" @mouseover="gameoverBtnHover = true" @mouseout="gameoverBtnHover = false" :class="this.gameoverBtnHover === false ? 'fa-door-closed' : 'fa-door-open' "></i>
+                            </a>
+                            
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+        
+    </div>    
 
 </template>
 
 <style lang="scss" scoped>
 @use '../style/main.scss';
 
-h1 {
-    color: green;
-}
+#content {
+    background-color: black;
+    min-height: calc(100vh - 60px);
+    color: white;
 
-#loader {
-    height: 400px;
-    width: 400px;
-    margin: auto;
-    background-image: url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHd4YTB2cmZtd3Zob2NqOWUyZDQ1eGxlZ25rbG0xY3JmMDM1dGx3YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tA4R6biK5nlBVXeR7w/giphy.gif");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: gainsboro;
-}
+    h1 {
+        color: green;
+    }
 
-.stage-picture {
-    // height: 400px;
-    // width: 400px;
-    // margin: auto;
+    // --- Imagine caricamento
+    #loader {
+        height: 400px;
+        width: 400px;
+        margin: auto;
+        background-image: url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHd4YTB2cmZtd3Zob2NqOWUyZDQ1eGxlZ25rbG0xY3JmMDM1dGx3YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tA4R6biK5nlBVXeR7w/giphy.gif");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: gainsboro;
+    }
 
-    // background-image: url('https://picsum.photos/seed/random/512/512');
-    // background-repeat: no-repeat;
-    // background-position: center;
-    // background-color: gainsboro;
+    .stage-picture {
+        // height: 400px;
+        // width: 400px;
+        // margin: auto;
 
-    img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        // background-image: url('https://picsum.photos/seed/random/512/512');
+        // background-repeat: no-repeat;
+        // background-position: center;
+        // background-color: gainsboro;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    // --- MODALE FINE PARTITA
+    #death-modal {
+        background-color: black;
+        .modal-content {
+            background-color: black;
+            border-color: white;
+
+            // header
+            .modal-header {
+                border-bottom: transparent;
+                justify-content: center;
+                
+                img {
+                    height: 70px;
+                    width: 70px;
+                }
+            }
+
+            // footer
+            .modal-footer {
+                border-top: transparent;
+                .gameover-btn {
+                    font-size: 20px;
+                }
+            }
+        }
     }
 }
-
-// #death-modal {
-    
-// }
 
 </style>
