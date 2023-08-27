@@ -35,7 +35,7 @@ export default {
             this.completeChat.push({
                 role: 'system',
                 content: 
-                `Voglio che ti comporti come se fossi un classico gioco di avventura testuale. Io sarò il protagonista e giocatore principale. Non fare riferimento a te stesso. L'ambientazione di questo gioco sarà a tema ${this.selectedGenre}. Ogni ambientazione ha una descrizione di 150 caratteri seguita da una array di 3 azioni possibili che il giocatore può compiere. Una di queste azioni è mortale e termina il gioco.
+                `Voglio che ti comporti come se fossi un classico gioco di avventura testuale. Io sarò il protagonista e giocatore principale. Non fare riferimento a te stesso. L'ambientazione di questo gioco sarà a tema ${this.selectedGenre}. Ogni ambientazione ha una descrizione di circa 200 caratteri seguita da una array di 3 azioni possibili che il giocatore può compiere. Una di queste azioni è mortale e termina il gioco.
                 Non aggiungere mai altre spiegazioni. Non fare riferimento a te stesso. Le tue risposte sono solo in formato JSON come questo esempio:
                 ###
                 { 
@@ -226,7 +226,7 @@ h1 {
     height: 400px;
     width: 400px;
     margin: auto;
-    background-image: url(/loader.gif);
+    background-image: url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHd4YTB2cmZtd3Zob2NqOWUyZDQ1eGxlZ25rbG0xY3JmMDM1dGx3YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tA4R6biK5nlBVXeR7w/giphy.gif");
     background-repeat: no-repeat;
     background-position: center;
     background-color: gainsboro;
@@ -250,8 +250,8 @@ h1 {
     }
 }
 
-#death-modal {
+// #death-modal {
     
-}
+// }
 
 </style>

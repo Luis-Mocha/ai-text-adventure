@@ -62,15 +62,15 @@
             
             <div class="menu-options">
 
-                <router-link :to="{ name: 'playground', params: { genre: 'fantasy' } }" class="menu-option" @mouseover="setBackground('fantasy')" @mouseleave="clearBackground()">
+                <router-link :to="{ name: 'playground', params: { genre: 'fantasy' } }" class="menu-option" @mouseenter="setBackground('fantasy')" @mouseleave="clearBackground()">
                     fantasy
                 </router-link>
 
-                <router-link :to="{ name: 'playground', params: { genre: 'horror' } }" class="menu-option" @mouseover="setBackground('horror')" @mouseleave="clearBackground()">
+                <router-link :to="{ name: 'playground', params: { genre: 'horror' } }" class="menu-option" @mouseenter="setBackground('horror')" @mouseleave="clearBackground()">
                     horror
                 </router-link>
 
-                <router-link :to="{ name: 'playground', params: { genre: 'supereroi' } }" class="menu-option" @mouseover="setBackground('supereroi')" @mouseleave="clearBackground()">
+                <router-link :to="{ name: 'playground', params: { genre: 'supereroi' } }" class="menu-option" @mouseenter="setBackground('supereroi')" @mouseleave="clearBackground()">
                     superheroes
                 </router-link>
 
@@ -91,11 +91,9 @@
         min-height: calc(100vh - 60px);
         padding: 20px 0;
     
-        // background-image: url('https://images.unsplash.com/photo-1606639421367-97fba5c3833a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D&w=1000&q=80');
-        background-image: none;
         background-repeat: no-repeat;
         background-size: cover;
-        transition: 1s;
+        transition: background-image 1s ease-in-out;
     }
 
     .container {
