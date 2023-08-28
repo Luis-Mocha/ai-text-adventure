@@ -13,7 +13,7 @@
             setBackground(x) {
 
                 const text = document.getElementById('presentation');
-                text.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+                text.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
             
                 const contentBackground = document.getElementById('content');
 
@@ -55,22 +55,22 @@
                 </p>
 
                 <p>
-                    Now choose the setting of your story
+                    Now choose the setting of your story:
                 </p>
 
             </div>
             
             <div class="menu-options">
 
-                <router-link :to="{ name: 'playground', params: { genre: 'fantasy' } }" class="menu-option" @mouseenter="setBackground('fantasy')" @mouseleave="clearBackground()">
+                <router-link :to="{ name: 'playground', params: { genre: 'fantasy' } }" class="menu-option left" >
                     fantasy
                 </router-link>
 
-                <router-link :to="{ name: 'playground', params: { genre: 'horror' } }" class="menu-option" @mouseenter="setBackground('horror')" @mouseleave="clearBackground()">
+                <router-link :to="{ name: 'playground', params: { genre: 'horror' } }" class="menu-option center" >
                     horror
                 </router-link>
 
-                <router-link :to="{ name: 'playground', params: { genre: 'supereroi' } }" class="menu-option" @mouseenter="setBackground('supereroi')" @mouseleave="clearBackground()">
+                <router-link :to="{ name: 'playground', params: { genre: 'supereroi' } }" class="menu-option right"> <!-- @mouseenter="setBackground('supereroi')" @mouseleave="clearBackground()" -->
                     superheroes
                 </router-link>
 
@@ -99,12 +99,15 @@
     .container {
 
         #presentation {
-            
             border-radius: 10px;
-            padding: 5px 0;
+            padding: 10px 15px;
+            margin: 10px 0 30px;
 
             h1 {
                 color: green;
+                text-transform: uppercase;
+                font-weight: bold;
+                letter-spacing: 3px;
             }
 
             p {
@@ -114,17 +117,15 @@
         }
 
         .menu-options {
-            // display: flex;
-            // flex-direction: column;
-            // align-items: center;
 
             .menu-option {
                 margin: auto;
                 margin-bottom: 10px;
 
                 border: 2px solid white;
-                width: 150px;
-                height: 150px;
+                border-radius: 0%;
+                width: 200px;
+                height: 200px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -133,8 +134,6 @@
                 text-decoration: none;
                 color: inherit;
                 text-transform: uppercase;
-
-                
             }
 
         }
@@ -149,21 +148,91 @@
             flex-direction: row;
             justify-content: space-evenly;
 
-            // position: absolute;
-            // top: 50%;
-            // left: 50%;
-            // transform: translate(-50%, -50%);
-
             .menu-option {
                 margin-bottom: 0;
                 filter: blur(1.3px);
-                    transition: 1.2s all;
+                transition: all 0.8s;
 
                 &:hover {
-                    // background-color: darkcyan;
                     filter: blur(0);
-                    background-color: rgba(0, 0, 0, 0.6);
+                    // background-color: rgba(0, 0, 0, 0.8);
+                    transform: scale(1.2);
+                    border-radius: 50%;
+                    // background-image: url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHd4YTB2cmZtd3Zob2NqOWUyZDQ1eGxlZ25rbG0xY3JmMDM1dGx3YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tA4R6biK5nlBVXeR7w/giphy.gif");
+                    background-size: cover;
+                    border-color: transparent;
+                    border-width: 3px;
+                    animation-duration: 2s;
+                    animation-iteration-count:infinite;
+                    animation-timing-function: ease-in-out;
                 }
+                &:hover.left {
+                    animation-name: anime-left;
+                }
+                &:hover.center{
+                    animation-name: anime-center;
+                }
+                &:hover.right {
+                    animation-name: anime-right;
+                }
+                // animazione sinistra
+                @keyframes anime-left {
+                    25% {
+                        border-top-color: white;
+                        border-top-width: 2px;
+                    }
+                    50% {
+                        border-right-color: white;
+                        border-right-width: 4px;
+                    }
+                   75% {
+                        border-bottom-color: white;
+                        border-bottom-width: 6px;
+                    }
+                   100% {
+                        border-left-color: white;
+                        border-left-width: 8px;
+                   }
+                }
+                // animazione centro
+                @keyframes anime-center {
+                    25% {
+                        border-left-color: white;
+                        border-left-width: 2px;
+                    }
+                    50% {
+                        border-bottom-color: white;
+                        border-bottom-width: 4px;
+                    }
+                   75% {
+                        border-right-color: white;
+                        border-right-width: 6px;
+                    }
+                   100% {
+                        border-top-color: white;
+                        border-top-width: 8px;
+                   }
+                }
+                // animazione destra
+                @keyframes anime-right {
+                    25% {
+                        border-top-color: white;
+                        border-top-width: 2px;
+                    }
+                    50% {
+                        border-left-color: white;
+                        border-left-width: 4px;
+                    }
+                   75% {
+                        border-bottom-color: white;
+                        border-bottom-width: 6px;
+                    }
+                   100% {
+                        border-right-color: white;
+                        border-right-width: 8px;
+                   }
+                }
+
             }
         }
 
