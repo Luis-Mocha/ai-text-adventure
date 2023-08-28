@@ -26,7 +26,8 @@
 @use '../style/main.scss';
 
 header {
-    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(18,73,39,1) 100%);
+    // background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(18,73,39,1) 100%);
+    background: linear-gradient(to top, #000000, #0f9b0f);
     color: white;
 
     height: 60px;
