@@ -102,7 +102,7 @@
             border-radius: 10px;
             padding: 10px 15px;
             margin: 10px 0 30px;
-
+            
             h1 {
                 color: green;
                 text-transform: uppercase;
@@ -113,6 +113,7 @@
             p {
                 text-align: center;
                 margin: 10px 0;
+                font-size: 25px;
             }
         }
 
