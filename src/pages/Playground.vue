@@ -52,9 +52,11 @@ export default {
         // --- funzione per creare il "livello" ---
         async setStage() {
             const loader = document.getElementById('loader');
+            const stage = document.querySelector('.stage-content');
 
             // 1. Mostro il loader e interrogo chatgpt
             loader.classList.remove('d-none');
+            stage.classList.add('d-none');
 
             const gtpResponse = await this.makeRequest('/chat/completions', {
                 temperature: 0.7,
@@ -66,6 +68,7 @@ export default {
 
             // 2. Inserisco la risposta gpt nello storico e la mostro (nascono il loader)
             loader.classList.add('d-none');
+            stage.classList.remove('d-none');
 
             const message = gtpResponse.choices[0].message;
             this.completeChat.push(message);
@@ -75,10 +78,6 @@ export default {
             // console.log(content);
             let actions = content.actions;
             let description = content.description;
-
-            // this.setStageDescription(description);
-
-            // this.setStageActions(actions);
 
             // nel caso di morte
             if (actions.length === 0) {
@@ -121,7 +120,7 @@ export default {
             const self = this;
 
             param.forEach(element => {
-                actionsHtml += `<button class="stage-action">${element}<button/>`
+                actionsHtml += `<button class="stage-action">${element}</button>`
             });
 
             document.querySelector('#stage-actions').innerHTML = actionsHtml;
@@ -129,6 +128,10 @@ export default {
             // per ogni bottone al click
             const actionButtons = document.querySelectorAll('.stage-action');
             actionButtons.forEach(button => {
+                button.style.marginBottom = '20px';
+                button.style.borderRadius = '10px';
+                button.style.padding = '5px 0';
+
                 button.addEventListener('click', function() {
                     // recuper l'azione scelta                    
                     const selectedAction = button.innerText;
@@ -165,10 +168,6 @@ export default {
 
     <div id="content">
 
-        <h1 class="text-center">
-            Playground
-        </h1>
-
         <div class="container">
 
             <!-- stage template -->
@@ -187,7 +186,7 @@ export default {
                         <!-- descrizione dinamica del livello -->
                     </div>
 
-                    <div id="stage-actions" class="stage-actions d-flex justify-content-center">
+                    <div id="stage-actions" class="stage-actions">
                         
                     </div>
 
@@ -206,7 +205,7 @@ export default {
                         <img src="https://i.giphy.com/media/l3V0yA9zHe5m29sxW/giphy.webp" alt="">
                         <span>Died</span>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body text-center">
                         ...
                     </div>
                     <div class="modal-footer">
@@ -216,7 +215,7 @@ export default {
                                 <i class="fa-solid fa-door-closed"></i>
                             </router-link> -->
                             <a href="/">
-                                <i class="fa-solid" @mouseover="gameoverBtnHover = true" @mouseout="gameoverBtnHover = false" :class="this.gameoverBtnHover === false ? 'fa-door-closed' : 'fa-door-open' "></i>
+                                <i class="fa-solid" @mouseover="this.gameoverBtnHover = true" @mouseout="this.gameoverBtnHover = false" :class="this.gameoverBtnHover === false ? 'fa-door-closed' : 'fa-door-open' "></i>
                             </a>
                             
                         </button>
@@ -239,36 +238,53 @@ export default {
     min-height: calc(100vh - 60px);
     color: white;
 
-    h1 {
-        color: green;
-    }
+    .stage {
+        padding: 20px 0 10px;
 
-    // --- Imagine caricamento
-    #loader {
-        height: 400px;
-        width: 400px;
-        margin: auto;
-        background-image: url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHd4YTB2cmZtd3Zob2NqOWUyZDQ1eGxlZ25rbG0xY3JmMDM1dGx3YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tA4R6biK5nlBVXeR7w/giphy.gif");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-color: gainsboro;
-    }
+         // --- IMMAGINE CARICAMENTO
+        #loader {
+            height: 400px;
+            width: 400px;
+            margin: auto;
+            background-image: url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHd4YTB2cmZtd3Zob2NqOWUyZDQ1eGxlZ25rbG0xY3JmMDM1dGx3YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tA4R6biK5nlBVXeR7w/giphy.gif");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: gainsboro;
+        }
 
-    .stage-picture {
-        // height: 400px;
-        // width: 400px;
-        // margin: auto;
+        .stage-picture {
+            // height: 400px;
+            // width: 400px;
+            // margin: auto;
 
-        // background-image: url('https://picsum.photos/seed/random/512/512');
-        // background-repeat: no-repeat;
-        // background-position: center;
-        // background-color: gainsboro;
+            // background-image: url('https://picsum.photos/seed/random/512/512');
+            // background-repeat: no-repeat;
+            // background-position: center;
+            // background-color: gainsboro;
 
-        img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        // --- DESCRIZIONE E AZIONI
+        .stage-content {
+            .stage-description {
+                text-align: center;
+                padding: 10px 15px;
+                margin-bottom: 20px;
+                font-size: 30px;
+            }
+            .stage-actions {
+                max-width: 700px;
+                margin: auto;
+                display: flex !important;
+                flex-direction: column;
+                font-size: 25px;
+            }
         }
     }
 
