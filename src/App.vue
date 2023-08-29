@@ -1,6 +1,6 @@
 <script>
 import {RouterView} from 'vue-router'
-import HeaderComp from './components/Headercomp.vue';
+import HeaderComp from './components/HeaderComp.vue';
 // import StartMenu from './pages/StartMenu.vue';
 // import Playground from './pages/Playground.vue';
 
