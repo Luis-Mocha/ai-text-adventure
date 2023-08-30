@@ -240,8 +240,8 @@ export default {
 
          // --- IMMAGINE CARICAMENTO
         #loader {
-            height: 400px;
-            width: 400px;
+            max-width: 400px;
+            aspect-ratio: 1;
             margin: auto;
             background-image: url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHd4YTB2cmZtd3Zob2NqOWUyZDQ1eGxlZ25rbG0xY3JmMDM1dGx3YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tA4R6biK5nlBVXeR7w/giphy.gif");
             background-repeat: no-repeat;
