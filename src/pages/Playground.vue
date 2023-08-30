@@ -35,15 +35,7 @@ export default {
             // istruzioni inziali
             this.completeChat.push({
                 role: 'system',
-                content: 
-                `Voglio che ti comporti come se fossi un classico gioco di avventura testuale. Io sarò il protagonista e giocatore principale. Non fare riferimento a te stesso. L'ambientazione di questo gioco sarà a tema ${this.selectedGenre}. Ogni ambientazione ha una descrizione di circa 200 caratteri seguita da una array di 3 azioni possibili che il giocatore può compiere. Una di queste azioni è mortale e termina il gioco.
-                Non aggiungere mai altre spiegazioni. Non fare riferimento a te stesso. Le tue risposte sono solo in formato JSON come questo esempio:
-                ###
-                { 
-                "description":"descrizione ambientazione",
-                "actions":["azione 1", "azione 2", "azione 3"]
-                }
-                ###`
+                content: `Voglio che ti comporti come se fossi un classico gioco di avventura testuale. Io sarò il protagonista e giocatore principale. Non fare riferimento a te stesso. L'ambientazione di questo gioco sarà a tema ${this.selectedGenre}. Ogni ambientazione ha una descrizione di circa 200 caratteri seguita da una array di 3 azioni possibili che il giocatore può compiere. Una di queste azioni è mortale e termina il gioco. Non aggiungere mai altre spiegazioni. Non fare riferimento a te stesso. Le tue risposte sono solo in formato JSON come questo esempio:###{"description":"descrizione ambientazione","actions":["azione 1", "azione 2", "azione 3"]}###`
             });
 
             // genero il primo livello
@@ -72,6 +64,8 @@ export default {
 
             const message = gtpResponse.choices[0].message;
             this.completeChat.push(message);
+            console.log(message);
+            console.log(this.completeChat);
 
             // 3. Recupero il contenuto del messaggio per estrapolare la descrizione del livello e le possibili azioni
             const content = JSON.parse(message.content);
@@ -139,7 +133,7 @@ export default {
                     // nuovo messaggio verso chatgpt
                     self.completeChat.push({
                         role: 'user',
-                        content: `${selectedAction}. Se questa azione è mortale l'elenco delle azioni è vuoto. Non dare altro testo che non sia un oggetto JSON. Le tue risposte sono solo in formato JSON come questo esempio:\n\n###\n\n{"description": "sei morto per questa motivazione", "actions": []}###`
+                        content: `${selectedAction}. Se questa azione è mortale l'elenco delle azioni è vuoto. Non dare altro testo che non sia un oggetto JSON. Le tue risposte sono solo in formato JSON come questo esempio:###{"description": "sei morto per questa motivazione", "actions": []}###`
                     });
 
                     // genero un nuovo livello
