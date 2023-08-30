@@ -19,10 +19,6 @@ export default {
         this.setStage()
     },
 	methods: {
-        
-		test() {
-		    console.log(`ehi ${import.meta.env.VITE_API_KEY}`);
-		},
 
         setGenre() {
             // definisco il titolo dinamico della pagina
@@ -58,7 +54,7 @@ export default {
                 messages: this.completeChat
             });
 
-            console.log(gtpResponse); //test risposta gpt
+            // console.log(gtpResponse); //test risposta gpt
 
             // 2. Inserisco la risposta gpt nello storico e la mostro (nascono il loader)
             loader.classList.add('d-none');
@@ -66,8 +62,8 @@ export default {
 
             const message = gtpResponse.choices[0].message;
             this.completeChat.push(message);
-            console.log(message);
-            console.log(this.completeChat);
+            // console.log(message);
+            // console.log(this.completeChat);
 
             // 3. Recupero il contenuto del messaggio per estrapolare la descrizione del livello e le possibili azioni
             const content = JSON.parse(message.content);
@@ -147,7 +143,7 @@ export default {
 
         // --- funzione per aprire la modale di Gameover ---
         setGameover(param) {
-            console.log('test gameover');
+            // console.log('test gameover');
             const deathModal = new Modal(document.getElementById('death-modal'));
 
             const modalBody = document.querySelector('#death-modal .modal-body');
@@ -197,7 +193,6 @@ export default {
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <!-- <h1 class="modal-title fs-5" id="death-modalLabel">You died</h1> -->
                         <span>You</span>
                         <img src="https://i.giphy.com/media/l3V0yA9zHe5m29sxW/giphy.webp" alt="">
                         <span>Died</span>
@@ -206,11 +201,7 @@ export default {
                         ...
                     </div>
                     <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
                         <button type="button" class="btn gameover-btn">
-                            <!-- <router-link :to="{ name: 'startMenu' }">
-                                <i class="fa-solid fa-door-closed"></i>
-                            </router-link> -->
                             <a href="/">
                                 <i class="fa-solid" @mouseover="this.gameoverBtnHover = true" @mouseout="this.gameoverBtnHover = false" :class="this.gameoverBtnHover === false ? 'fa-door-closed' : 'fa-door-open' "></i>
                             </a>
