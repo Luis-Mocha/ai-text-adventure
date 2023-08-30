@@ -1,4 +1,6 @@
 <script>
+import {Modal} from 'bootstrap';
+
 
 export default {
 	name: 'Playground',
@@ -145,7 +147,8 @@ export default {
 
         // --- funzione per aprire la modale di Gameover ---
         setGameover(param) {
-            const deathModal = new bootstrap.Modal(document.getElementById('death-modal'));
+            console.log('test gameover');
+            const deathModal = new Modal(document.getElementById('death-modal'));
 
             const modalBody = document.querySelector('#death-modal .modal-body');
             modalBody.innerText = param;
